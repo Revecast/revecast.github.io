@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revecast Documentation</title>
+  <link rel="stylesheet" href="shared/style.css">
+  <style>
+    .system-loop {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin: 24px 0 32px;
+    }
+    .loop-step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+    .loop-step:last-child { margin-bottom: 0; }
+    .loop-num {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--rc-blue-soft);
+      border: 1px solid var(--rc-blue);
+      color: var(--rc-blue-hover);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .loop-body { flex: 1; }
+    .loop-body strong { font-size: 14px; color: var(--text); display: block; margin-bottom: 4px; }
+    .loop-body p { margin: 0; font-size: 13px; }
+    .loop-body .loop-product {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-top: 6px;
+    }
+    .loop-product-psa { background: rgba(34,197,94,.12); color: var(--green); }
+    .loop-product-recruiter { background: var(--rc-blue-soft); color: var(--rc-blue-hover); border: 1px solid var(--rc-blue-border); }
+    .loop-product-connect { background: rgba(167,139,250,.12); color: var(--purple); border: 1px solid rgba(167,139,250,.25); }
+    .loop-return {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 12px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border);
+    }
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .product-card-header { display: flex; align-items: center; gap: 12px; }
+    .product-icon {
+      font-size: 24px;
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent-soft);
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .product-title { font-size: 17px; font-weight: 700; color: var(--text); }
+    .product-title span { display: block; font-size: 12px; font-weight: 400; color: var(--text-muted); margin-top: 2px; }
+    .product-desc { font-size: 14px; color: var(--text-muted); margin: 0; }
+    .product-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .product-links a {
+      font-size: 12px;
+      color: var(--accent-hover);
+      background: var(--accent-soft);
+      border: 1px solid rgba(12,131,223,0.2);
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .product-links a:hover { background: rgba(12,131,223,0.2); text-decoration: none; }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+      margin: 16px 0 24px;
+    }
+    .pain-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .pain-card strong { color: var(--text); display: block; margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="index.html"><img src="shared/logo.svg" alt="Revecast" class="sidebar-logo"></a>
+    <a class="logo" href="index.html">Reve<span>cast</span></a>
+    <div class="badge">Documentation</div>
+  </div>
+  <div class="sidebar-nav">
+    <a href="index.html" class="active"><span class="icon">&#127968;</span> Home</a>
+    <a href="system.html"><span class="icon">&#128260;</span> The Revecast System</a>
+
+    <div class="nav-section">Products</div>
+    <a href="https://revecast.github.io/PSACore/"><span class="icon">&#9889;</span> PSACore</a>
+    <a href="https://revecast.github.io/revecast-recruiter/"><span class="icon">&#128188;</span> Recruiter</a>
+    <a href="https://revecast.github.io/revecast-forms/"><span class="icon">&#128221;</span> Forms</a>
+    <a href="connect.html"><span class="icon">&#128279;</span> Connect</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <button type="button" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="topbar-title"><strong>Revecast</strong> &mdash; Documentation</div>
+    <div class="topbar-meta"></div>
+  </div>
+
+  <div class="content">
+    <div class="page-hero">
+      <h1>Revecast
+        <span class="subtitle">A connected system that helps services companies make better decisions about revenue, staffing, and hiring.</span>
+      </h1>
+      <div class="tags">
+        <span class="tag tag-blue">Platform</span>
+        <span class="tag tag-purple">Salesforce</span>
+        <span class="tag tag-green">AI-Powered</span>
+      </div>
+    </div>
+
+    <p>
+      Revecast connects the full planning and workforce lifecycle into one system. Instead of managing revenue forecasting, capacity planning, recruiting, and execution in separate tools, Revecast brings them together &mdash; so every decision is informed by what's actually happening across your business.
+    </p>
+
+    <hr class="divider">
+
+    <h2>The Problem</h2>
+
+    <p>Services companies don't have a clear, reliable view of what's actually going to close, whether they have the right team to deliver it, or when they need to hire.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card"><strong>Reactive hiring</strong>Hiring too late once deals are already closing</div>
+      <div class="pain-card"><strong>Underutilized teams</strong>Paying for resources with no billable work</div>
+      <div class="pain-card"><strong>Over-hiring early</strong>Bringing on staff too soon, hurting margins</div>
+      <div class="pain-card"><strong>Missed revenue</strong>Not having the right team to deliver won work</div>
+      <div class="pain-card"><strong>Delivery risk</strong>Projects delayed due to staffing gaps</div>
+      <div class="pain-card"><strong>Inconsistent margins</strong>Unpredictable financial performance</div>
+    </div>
+
+    <p>These aren't isolated issues &mdash; they're symptoms of the same underlying problem: <strong>a lack of alignment between pipeline, capacity, and hiring decisions.</strong></p>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">&#128260;</span>
+      <p>See <a href="system.html">The Revecast System</a> for a detailed breakdown of how the connected planning loop works.</p>
+    </div>
+
+    <hr class="divider">
+
+    <h2>Products</h2>
+
+    <div class="product-card">
+      <div class="product-card-header">
+        <div class="product-icon">&#9889;</div>
+        <div class="product-title">PSACore
+          <span>Revenue forecasting, capacity planning, project management, time tracking, and invoicing</span>
+        </div>
+      </div>
+      <p class="product-desc">The "plan and execute" side of Revecast. Forecast your pipeline, translate it into resource demand, identify capacity gaps, manage projects, track time, and invoice clients &mdash; all within Salesforce.</p>
+      <div class="product-links">
+        <a href="https://revecast.github.io/PSACore/">Documentation</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-card-header">
+        <div class="product-icon">&#128188;</div>
+        <div class="product-title">Revecast Recruiter
+          <span>Job management, candidate pipeline, AI resume processing, and interview management</span>
+        </div>
+      </div>
+      <p class="product-desc">The "hire" side of Revecast. When capacity gaps are identified, Recruiter manages the full hiring workflow &mdash; job postings, candidate matching, AI-powered resume screening, interviews, and offers. Includes Maya AI chat assistant, a public job board, and Agentforce-powered resume processing.</p>
+      <div class="product-links">
+        <a href="https://revecast.github.io/revecast-recruiter/">Documentation</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-card-header">
+        <div class="product-icon">&#128221;</div>
+        <div class="product-title">Revecast Forms
+          <span>Dynamic form builder for custom application experiences and data collection</span>
+        </div>
+      </div>
+      <p class="product-desc">A native Salesforce form builder used to customize the application experience on the job board, build intake forms, and collect structured data. Supports conditional logic, multi-object mapping, and guest user submissions.</p>
+      <div class="product-links">
+        <a href="https://revecast.github.io/revecast-forms/">Documentation</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-card-header">
+        <div class="product-icon">&#128279;</div>
+        <div class="product-title">Revecast Connect
+          <span>Integration platform connecting Salesforce to HR, finance, and external systems</span>
+        </div>
+      </div>
+      <p class="product-desc">The integration layer that keeps your Revecast system connected to the rest of your business. Syncs hiring data to HR platforms, project data to financial systems, and keeps your tools aligned &mdash; with AI-assisted integration building.</p>
+      <div class="product-links">
+        <a href="connect.html">Documentation</a>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <h2>Built on Salesforce</h2>
+
+    <p>The entire Revecast platform runs natively on Salesforce. No external databases, no separate logins, no data migration.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Single Source of Truth</div>
+        <p>Pipeline, projects, people, and hiring all live where your CRM data already is.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Native Reporting</div>
+        <p>Standard Salesforce reports and dashboards across the full lifecycle.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Standard Security</div>
+        <p>Salesforce sharing rules, permission sets, and profiles control access.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="shared/nav.js"></script>
+</body>
+</html>

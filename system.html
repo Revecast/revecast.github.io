@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Revecast System | Revecast</title>
+  <link rel="stylesheet" href="shared/style.css">
+  <style>
+    .loop-step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      align-items: flex-start;
+    }
+    .loop-num {
+      flex-shrink: 0;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--rc-blue-soft);
+      border: 1px solid var(--rc-blue);
+      color: var(--rc-blue-hover);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .loop-body { flex: 1; }
+    .loop-body strong { font-size: 14px; color: var(--text); display: block; margin-bottom: 4px; }
+    .loop-body p { margin: 0 0 6px; font-size: 13px; }
+    .loop-body p:last-child { margin-bottom: 0; }
+    .loop-product {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-top: 4px;
+      text-decoration: none;
+    }
+    .loop-product:hover { text-decoration: none; opacity: 0.85; }
+    .lp-psa { background: rgba(34,197,94,.12); color: var(--green); }
+    .lp-recruiter { background: var(--rc-blue-soft); color: var(--rc-blue-hover); border: 1px solid var(--rc-blue-border); }
+    .lp-connect { background: rgba(167,139,250,.12); color: var(--purple); border: 1px solid rgba(167,139,250,.25); }
+    .loop-return {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 13px;
+      margin: 8px 0 28px;
+      padding: 16px;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      background: var(--bg-card);
+    }
+    .connection-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 14px;
+    }
+    .connection-card h3 { margin: 0 0 6px; font-size: 14px; }
+    .connection-card p { margin: 0; font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="index.html"><img src="shared/logo.svg" alt="Revecast" class="sidebar-logo"></a>
+    <a class="logo" href="index.html">Reve<span>cast</span></a>
+    <div class="badge">Documentation</div>
+  </div>
+  <div class="sidebar-nav">
+    <a href="index.html"><span class="icon">&#127968;</span> Home</a>
+    <a href="system.html" class="active"><span class="icon">&#128260;</span> The Revecast System</a>
+
+    <div class="nav-section">Products</div>
+    <a href="https://revecast.github.io/PSACore/"><span class="icon">&#9889;</span> PSACore</a>
+    <a href="https://revecast.github.io/revecast-recruiter/"><span class="icon">&#128188;</span> Recruiter</a>
+    <a href="https://revecast.github.io/revecast-forms/"><span class="icon">&#128221;</span> Forms</a>
+    <a href="connect.html"><span class="icon">&#128279;</span> Connect</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <button type="button" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="topbar-title"><strong>Revecast</strong> &mdash; The Revecast System</div>
+    <div class="topbar-meta"></div>
+  </div>
+
+  <div class="content">
+    <div class="page-hero">
+      <h1>The Revecast System
+        <span class="subtitle">How planning, hiring, and execution connect into one continuous loop.</span>
+      </h1>
+      <div class="tags">
+        <span class="tag tag-blue">Platform</span>
+        <span class="tag tag-purple">Connected System</span>
+        <span class="tag tag-green">Salesforce</span>
+      </div>
+    </div>
+
+    <p>
+      Revecast is not a collection of separate tools. It's a connected system that links revenue forecasting, capacity planning, recruiting, and execution into one continuous loop. Each step feeds into the next, creating a cycle of better decisions.
+    </p>
+
+    <hr class="divider">
+
+    <h2>The Connected Loop</h2>
+
+    <div class="loop-step">
+      <div class="loop-num">1</div>
+      <div class="loop-body">
+        <strong>Forecast Pipeline &amp; Revenue</strong>
+        <p>Predict what work is coming based on your Salesforce pipeline. Understand which deals are likely to close and when revenue will land.</p>
+        <a href="https://revecast.github.io/PSACore/" class="loop-product lp-psa">PSACore</a>
+      </div>
+    </div>
+
+    <div class="loop-step">
+      <div class="loop-num">2</div>
+      <div class="loop-body">
+        <strong>Translate to Resource Demand</strong>
+        <p>Automatically map forecasted work to the roles and capacity needed to deliver it. Each deal has a staffing plan attached.</p>
+        <a href="https://revecast.github.io/PSACore/" class="loop-product lp-psa">PSACore</a>
+      </div>
+    </div>
+
+    <div class="loop-step">
+      <div class="loop-num">3</div>
+      <div class="loop-body">
+        <strong>Identify Capacity Gaps</strong>
+        <p>Compare demand against your current team's availability and skills. See where you'll be short before it becomes a problem.</p>
+        <a href="https://revecast.github.io/PSACore/" class="loop-product lp-psa">PSACore</a>
+      </div>
+    </div>
+
+    <div class="loop-step">
+      <div class="loop-num">4</div>
+      <div class="loop-body">
+        <strong>Trigger Hiring Decisions</strong>
+        <p>When gaps are identified, create job requisitions and kick off recruiting workflows. Hiring is driven by actual demand, not guesswork.</p>
+        <a href="https://revecast.github.io/revecast-recruiter/" class="loop-product lp-recruiter">Recruiter</a>
+      </div>
+    </div>
+
+    <div class="loop-step">
+      <div class="loop-num">5</div>
+      <div class="loop-body">
+        <strong>Manage Recruiting</strong>
+        <p>Post jobs to a public job board, accept applications, screen candidates with AI, schedule interviews, and make offers. Maya AI assists candidates 24/7.</p>
+        <a href="https://revecast.github.io/revecast-recruiter/" class="loop-product lp-recruiter">Recruiter</a>
+        <a href="https://revecast.github.io/revecast-recruiter/job-board.html" class="loop-product lp-recruiter">Job Board</a>
+        <a href="https://revecast.github.io/revecast-recruiter/maya.html" class="loop-product lp-recruiter">Maya AI</a>
+        <a href="https://revecast.github.io/revecast-recruiter/hr-agent.html" class="loop-product lp-recruiter">HR Agent</a>
+      </div>
+    </div>
+
+    <div class="loop-step">
+      <div class="loop-num">6</div>
+      <div class="loop-body">
+        <strong>Sync with HR &amp; Financial Systems</strong>
+        <p>New hires flow to HR for onboarding. Project and invoicing data syncs to accounting. Your Salesforce data stays aligned with the tools your team uses.</p>
+        <a href="connect.html" class="loop-product lp-connect">Revecast Connect</a>
+      </div>
+    </div>
+
+    <div class="loop-step">
+      <div class="loop-num">7</div>
+      <div class="loop-body">
+        <strong>Compare Plan vs Actual</strong>
+        <p>Track what actually happened against what was planned. Use the data to improve future forecasting accuracy and make better decisions next cycle.</p>
+        <a href="https://revecast.github.io/PSACore/" class="loop-product lp-psa">PSACore</a>
+      </div>
+    </div>
+
+    <div class="loop-return">
+      Step 7 feeds back into Step 1 &mdash; creating a continuous cycle of better decisions.
+    </div>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">&#128260;</span>
+      <p><strong>This closed loop is the core product</strong> &mdash; not the individual components. Each step feeds into the next, so every decision is informed by what's actually happening across your business.</p>
+    </div>
+
+    <hr class="divider">
+
+    <h2>Where Each Product Fits</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Role in the System</th>
+          <th>Steps</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>PSACore</strong></td>
+          <td>Plan and execute &mdash; forecasting, capacity, projects, time, invoicing</td>
+          <td>1, 2, 3, 7</td>
+        </tr>
+        <tr>
+          <td><strong>Recruiter</strong></td>
+          <td>Hire &mdash; jobs, applications, interviews, AI screening, candidate matching</td>
+          <td>4, 5</td>
+        </tr>
+        <tr>
+          <td><strong>Forms</strong></td>
+          <td>Collect &mdash; custom application forms, intake, data collection</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td><strong>Connect</strong></td>
+          <td>Integrate &mdash; sync with HR, finance, and external systems</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr class="divider">
+
+    <h2>How Recruiter Connects to Planning</h2>
+
+    <div class="connection-card">
+      <h3>Capacity gaps become jobs</h3>
+      <p>When PSACore identifies that forecasted demand exceeds team capacity for a specific role, that gap becomes a job requisition in Recruiter.</p>
+    </div>
+
+    <div class="connection-card">
+      <h3>Hiring data feeds back to planning</h3>
+      <p>When a candidate is hired, their start date and role flow back to PSACore's capacity model, closing the gap and updating forecasts.</p>
+    </div>
+
+    <div class="connection-card">
+      <h3>Time tracking validates the plan</h3>
+      <p>Once the new hire starts delivering, PSACore tracks their actual utilization against what was planned, improving future forecasting accuracy.</p>
+    </div>
+
+    <div class="connection-card">
+      <h3>Skills from recruiting inform staffing</h3>
+      <p>Resume-parsed skills and interview feedback create a rich skills inventory that PSACore can use for future resource allocation decisions.</p>
+    </div>
+
+    <hr class="divider">
+
+    <h2>Built on Salesforce</h2>
+
+    <p>The entire system runs natively on Salesforce. No external databases, no separate logins, no data migration. Everything lives where your CRM data already is.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Single Source of Truth</div>
+        <p>Pipeline, projects, people, and hiring all live in one place.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Native Reporting</div>
+        <p>Standard Salesforce reports and dashboards across the full lifecycle.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Standard Security</div>
+        <p>Salesforce sharing rules, permission sets, and profiles control access.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="shared/nav.js"></script>
+</body>
+</html>
