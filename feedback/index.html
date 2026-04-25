@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature Requests &mdash; Revecast</title>
+  <meta name="description" content="Browse, vote on, and submit feature requests for the Revecast platform.">
+  <link rel="stylesheet" href="../shared/style.css">
+  <link rel="stylesheet" href="feedback.css">
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="../index.html"><img src="../shared/logo.svg" alt="Revecast" class="sidebar-logo"></a>
+    <a class="logo" href="../index.html">Revecast</a>
+    <div class="badge">Feedback</div>
+  </div>
+  <div class="sidebar-nav">
+    <a href="../index.html"><span class="icon">&#127968;</span> Home</a>
+    <a href="../system.html"><span class="icon">&#128260;</span> The Revecast System</a>
+
+    <div class="nav-section">Community</div>
+    <a href="./" class="active"><span class="icon">&#128161;</span> Feature Requests</a>
+    <a href="submit.html"><span class="icon">&#10133;</span> Submit a Request</a>
+
+    <div class="nav-section">Products</div>
+    <a href="https://revecast.github.io/PSACore/"><span class="icon">&#9889;</span> Revecast PSA</a>
+    <a href="https://revecast.github.io/revecast-recruiter/"><span class="icon">&#128188;</span> Revecast Recruiter</a>
+    <a href="https://revecast.github.io/revecast-forms/"><span class="icon">&#128221;</span> Revecast Forms</a>
+    <a href="https://revecast.github.io/Revecast-Kanban/"><span class="icon">&#128203;</span> Revecast Kanban</a>
+    <a href="../connect.html"><span class="icon">&#128279;</span> Revecast Connect</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <button type="button" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="topbar-title"><strong>Revecast</strong> &mdash; Feature Requests</div>
+    <div class="topbar-meta">
+      <a href="submit.html" class="btn-submit">&#10133; Submit Request</a>
+    </div>
+  </div>
+
+  <div class="content content-wide">
+    <div class="page-hero">
+      <h1>Feature Requests
+        <span class="subtitle">Browse what others are asking for, vote on the ideas you'd like to see built, and share your own.</span>
+      </h1>
+      <div class="tags">
+        <span class="tag tag-blue">Public</span>
+        <span class="tag tag-green">Powered by GitHub</span>
+      </div>
+    </div>
+
+    <div class="stats-strip" id="stats"></div>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label class="filter-label">Product</label>
+        <div class="chip-row" id="product-chips">
+          <button class="chip active" data-product="">All</button>
+          <button class="chip" data-product="psacore">PSA</button>
+          <button class="chip" data-product="recruiter">Recruiter</button>
+          <button class="chip" data-product="forms">Forms</button>
+          <button class="chip" data-product="kanban">Kanban</button>
+          <button class="chip" data-product="reporting">Reporting</button>
+          <button class="chip" data-product="connect">Connect</button>
+          <button class="chip" data-product="desktop">Desktop</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Status</label>
+        <div class="chip-row" id="status-chips">
+          <button class="chip active" data-status="">All open</button>
+          <button class="chip" data-status="under-review">Under review</button>
+          <button class="chip" data-status="planned">Planned</button>
+          <button class="chip" data-status="in-progress">In progress</button>
+          <button class="chip" data-status="shipped">Shipped</button>
+        </div>
+      </div>
+      <div class="filter-group filter-search">
+        <input type="search" id="search" placeholder="Search requests…" autocomplete="off" />
+        <select id="sort" aria-label="Sort">
+          <option value="votes">Most voted</option>
+          <option value="newest">Newest</option>
+          <option value="updated">Recently updated</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="request-list" class="request-list">
+      <div class="loading">Loading…</div>
+    </div>
+
+    <div class="alert alert-info" style="margin-top:32px;">
+      <span class="alert-icon">&#9432;</span>
+      <p>Submitting and voting requires a free GitHub account &mdash; or email <a href="mailto:feedback@revecast.io">feedback@revecast.io</a> and we'll log it for you.</p>
+    </div>
+  </div>
+</div>
+
+<script src="../shared/nav.js"></script>
+<script src="feedback.js"></script>
+</body>
+</html>
