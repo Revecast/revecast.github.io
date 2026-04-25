@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit a Feature Request &mdash; Revecast</title>
+  <meta name="description" content="Share your idea to make Revecast better. Pick the product your request applies to.">
+  <link rel="stylesheet" href="../shared/style.css">
+  <link rel="stylesheet" href="feedback.css">
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="../index.html"><img src="../shared/logo.svg" alt="Revecast" class="sidebar-logo"></a>
+    <a class="logo" href="../index.html">Revecast</a>
+    <div class="badge">Feedback</div>
+  </div>
+  <div class="sidebar-nav">
+    <a href="../index.html"><span class="icon">&#127968;</span> Home</a>
+    <a href="../system.html"><span class="icon">&#128260;</span> The Revecast System</a>
+
+    <div class="nav-section">Community</div>
+    <a href="./"><span class="icon">&#128161;</span> Feature Requests</a>
+    <a href="submit.html" class="active"><span class="icon">&#10133;</span> Submit a Request</a>
+
+    <div class="nav-section">Products</div>
+    <a href="https://revecast.github.io/PSACore/"><span class="icon">&#9889;</span> Revecast PSA</a>
+    <a href="https://revecast.github.io/revecast-recruiter/"><span class="icon">&#128188;</span> Revecast Recruiter</a>
+    <a href="https://revecast.github.io/revecast-forms/"><span class="icon">&#128221;</span> Revecast Forms</a>
+    <a href="https://revecast.github.io/Revecast-Kanban/"><span class="icon">&#128203;</span> Revecast Kanban</a>
+    <a href="../connect.html"><span class="icon">&#128279;</span> Revecast Connect</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <button type="button" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="topbar-title"><strong>Revecast</strong> &mdash; Submit a Feature Request</div>
+    <div class="topbar-meta">
+      <a href="./" class="topbar-sitemap">&larr; Back to all requests</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-hero">
+      <h1>Submit a Feature Request
+        <span class="subtitle">Tell us what would make Revecast better. We read every one.</span>
+      </h1>
+    </div>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">&#9432;</span>
+      <p>Submissions are tracked as public GitHub issues so you can see status updates over time. You'll need a free GitHub account &mdash; or email <a href="mailto:feedback@revecast.io">feedback@revecast.io</a> and we'll log it for you.</p>
+    </div>
+
+    <h2>Pick the product your idea applies to</h2>
+
+    <div class="product-grid" id="product-grid">
+      <a class="product-tile" data-product="psacore">
+        <div class="product-tile-icon">&#9889;</div>
+        <div class="product-tile-name">Revecast PSA</div>
+        <div class="product-tile-desc">Forecasting, capacity, projects, time, invoicing</div>
+      </a>
+      <a class="product-tile" data-product="recruiter">
+        <div class="product-tile-icon">&#128188;</div>
+        <div class="product-tile-name">Revecast Recruiter</div>
+        <div class="product-tile-desc">Jobs, candidates, AI resume processing, interviews</div>
+      </a>
+      <a class="product-tile" data-product="forms">
+        <div class="product-tile-icon">&#128221;</div>
+        <div class="product-tile-name">Revecast Forms</div>
+        <div class="product-tile-desc">Dynamic form builder for Salesforce</div>
+      </a>
+      <a class="product-tile" data-product="kanban">
+        <div class="product-tile-icon">&#128203;</div>
+        <div class="product-tile-name">Revecast Kanban</div>
+        <div class="product-tile-desc">Drag-and-drop boards on any Salesforce object</div>
+      </a>
+      <a class="product-tile" data-product="reporting">
+        <div class="product-tile-icon">&#128202;</div>
+        <div class="product-tile-name">Reporting Engine</div>
+        <div class="product-tile-desc">Record-context reports with templates &amp; filters</div>
+      </a>
+      <a class="product-tile" data-product="connect">
+        <div class="product-tile-icon">&#128279;</div>
+        <div class="product-tile-name">Revecast Connect</div>
+        <div class="product-tile-desc">Integration platform for HR, finance, external systems</div>
+      </a>
+      <a class="product-tile" data-product="desktop">
+        <div class="product-tile-icon">&#128187;</div>
+        <div class="product-tile-name">PSACore Desktop</div>
+        <div class="product-tile-desc">Native macOS &amp; Windows timer companion</div>
+      </a>
+    </div>
+
+    <p class="text-note">After clicking, you'll land on a pre-filled GitHub form. Fill in the details, hit Submit &mdash; your request will appear on the <a href="./">browse page</a> within a minute.</p>
+  </div>
+</div>
+
+<script src="../shared/nav.js"></script>
+<script>
+  // Build the GitHub Issue Form URL for each product tile,
+  // forwarding any incoming query params (e.g. ?product=psacore&org=AcmeCorp)
+  // so the in-app PSACore launcher can prefill org context.
+  (function () {
+    var REPO = "https://github.com/Revecast/feature-requests";
+    var incoming = new URLSearchParams(window.location.search);
+    var preselected = incoming.get("product");
+
+    var prefill = new URLSearchParams();
+    if (incoming.get("org")) prefill.set("org", incoming.get("org"));
+    // Any other prefill fields can be added here later.
+
+    document.querySelectorAll(".product-tile").forEach(function (tile) {
+      var product = tile.dataset.product;
+      var qp = new URLSearchParams(prefill);
+      qp.set("template", product + ".yml");
+      tile.href = REPO + "/issues/new?" + qp.toString();
+      tile.target = "_blank";
+      tile.rel = "noopener";
+      if (product === preselected) tile.classList.add("preselected");
+    });
+
+    // If a product was preselected via URL, scroll its tile into view subtly.
+    if (preselected) {
+      var pre = document.querySelector('.product-tile.preselected');
+      if (pre) pre.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  })();
+</script>
+</body>
+</html>
