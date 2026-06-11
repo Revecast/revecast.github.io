@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revecast Reporting Engine | Revecast</title>
+  <link rel="stylesheet" href="shared/style.css">
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="index.html"><img src="shared/logo.svg" alt="Revecast" class="sidebar-logo"></a>
+    <a class="logo" href="index.html">Revecast</a>
+    <div class="badge">Documentation</div>
+  </div>
+  <div class="sidebar-nav">
+    <a href="index.html"><span class="icon">&#127968;</span> Home</a>
+    <a href="system.html"><span class="icon">&#128260;</span> The Revecast System</a>
+
+    <div class="nav-section">Community</div>
+    <a href="feedback/"><span class="icon">&#128161;</span> Feature Requests</a>
+
+    <div class="nav-section">Products</div>
+    <a href="https://revecast.github.io/PSACore/"><span class="icon">&#9889;</span> Revecast PSA</a>
+    <a href="https://revecast.github.io/revecast-recruiter/"><span class="icon">&#128188;</span> Revecast Recruiter</a>
+    <a href="https://revecast.github.io/revecast-forms/"><span class="icon">&#128221;</span> Revecast Forms</a>
+    <a href="https://revecast.github.io/Revecast-Kanban/"><span class="icon">&#128203;</span> Revecast Kanban</a>
+    <a href="connect.html"><span class="icon">&#128279;</span> Revecast Connect</a>
+    <a href="reporting-engine.html" class="active"><span class="icon">&#128202;</span> Reporting Engine</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <button type="button" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="topbar-title"><strong>Revecast</strong> &mdash; Reporting Engine</div>
+    <div class="topbar-meta"></div>
+  </div>
+
+  <div class="content">
+    <div class="page-hero">
+      <h1>Revecast Reporting Engine
+        <span class="subtitle">One-click, record-scoped reports on any Salesforce object &mdash; configured by admins in minutes, no code, no Flow.</span>
+      </h1>
+      <div class="tags">
+        <span class="tag tag-blue">Revecast Product</span>
+        <span class="tag tag-purple">Managed Package</span>
+        <span class="tag tag-green">Beta</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <h2>What is the Reporting Engine?</h2>
+
+    <p>
+      The Reporting Engine puts the right reports on the right record pages, with the
+      record's context already applied. Drop the <strong>Report Engine</strong> component
+      on any object's Lightning record page and users get a curated list of reports that
+      open pre-filtered to the record they're looking at &mdash; a project's revenue
+      breakdown, an account's open work, a campaign's pipeline &mdash; one click, no
+      hunting through report folders, no manually re-filtering.
+    </p>
+
+    <p>
+      Admins configure everything through a guided wizard inside the dedicated
+      <strong>Report Engine</strong> app: search the org's reports, pick one, pick the
+      object, done. The engine handles the URL construction, record-context filtering,
+      and an optional inline panel where users can adjust filter values before opening.
+    </p>
+
+    <hr class="divider">
+
+    <h2>Key Capabilities</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Record-Context Reports</div>
+        <p>Every report opens scoped to the record it was launched from. The engine pins the record Id into the report's first filter and can map additional filters to any field on the record, a placeholder, or a literal.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Guided Template Wizard</div>
+        <p>Create or edit a report template in four steps. The wizard searches your reports, shows which dashboards use them, infers the right object from the report's type, and warns if a report can't actually receive a record filter.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Built-In Diagnostics</div>
+        <p>Every template record carries a setup panel running eight health checks &mdash; from "does the linked report still exist?" to "is the component actually placed on a page?" &mdash; each with a one-click fix and a test button that opens the real report against a sample record.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Self-Service Health</div>
+        <p>The app home page flags templates whose reports were deleted or recreated, searches and filters the catalog of templates, and shows folder and report-type context at a glance.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Inline Filter Overrides</div>
+        <p>Templates can expose their filters to users for one-off adjustments &mdash; while the record-context filter stays locked unless an admin explicitly allows overriding it.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">One-Click Access Control</div>
+        <p>Two permission sets ship in the box (User and Admin), assignable to yourself or teammates straight from the app home page &mdash; no Setup trip.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <h2>How It Works</h2>
+
+    <p><strong>For admins:</strong></p>
+    <ol>
+      <li>Install the package and assign yourself the <em>Report Engine Admin</em> permission set.</li>
+      <li>Open the <strong>Report Engine</strong> app &rarr; <strong>New Template</strong> &rarr; follow the wizard (pick a report, pick the object, name it).</li>
+      <li>Add the <strong>Report Engine</strong> component to that object's record page in the Lightning App Builder &mdash; the diagnostics panel confirms placement.</li>
+      <li>Assign <em>Report Engine User</em> to everyone who should see the reports.</li>
+    </ol>
+
+    <p><strong>For users:</strong> open a record, see its reports, click one. The report
+      opens in a new tab already filtered to that record.</p>
+
+    <hr class="divider">
+
+    <h2>Status</h2>
+
+    <p>
+      The Reporting Engine is in <strong>beta</strong> as a second-generation managed
+      package (namespace <code>Revecast</code>). The original Flow-based implementation
+      has been fully converted to Apex + Lightning Web Components, hardened for the
+      AppExchange security model (user-mode data access throughout), and validated with a
+      50-test suite against fresh orgs.
+    </p>
+
+  </div>
+</div>
+
+<script src="shared/nav.js"></script>
+</body>
+</html>
