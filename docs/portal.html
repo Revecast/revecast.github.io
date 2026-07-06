@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revecast PSA Portal | Revecast</title>
+  <link rel="stylesheet" href="shared/style.css">
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="index.html"><img src="shared/logo.svg" alt="Revecast" class="sidebar-logo"></a>
+    <a class="logo" href="index.html">Revecast</a>
+    <div class="badge">Documentation</div>
+  </div>
+  <div class="sidebar-nav">
+    <a href="index.html"><span class="icon">&#127968;</span> Home</a>
+    <a href="system.html"><span class="icon">&#128260;</span> The Revecast System</a>
+
+    <div class="nav-section">Community</div>
+    <a href="feedback/"><span class="icon">&#128161;</span> Feature Requests</a>
+
+    <div class="nav-section">Products</div>
+    <a href="https://revecast.github.io/PSACore/"><span class="icon">&#9889;</span> Revecast PSA</a>
+    <a href="https://revecast.github.io/revecast-recruiter/"><span class="icon">&#128188;</span> Revecast Recruiter</a>
+    <a href="https://revecast.github.io/revecast-forms/"><span class="icon">&#128221;</span> Revecast Forms</a>
+    <a href="https://revecast.github.io/Revecast-Kanban/"><span class="icon">&#128203;</span> Revecast Kanban</a>
+    <a href="connect.html"><span class="icon">&#128279;</span> Revecast Connect</a>
+    <a href="reporting-engine.html"><span class="icon">&#128202;</span> Reporting Engine</a>
+    <a href="portal.html" class="active"><span class="icon">&#127760;</span> PSA Portal</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <button type="button" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="topbar-title"><strong>Revecast</strong> &mdash; PSA Portal</div>
+    <div class="topbar-meta"></div>
+  </div>
+
+  <div class="content">
+    <div class="page-hero">
+      <h1>Revecast PSA Portal
+        <span class="subtitle">Give your customers and external team members a branded, self-service Experience Cloud portal into their own projects, schedules, and time &mdash; no full Salesforce license required.</span>
+      </h1>
+      <div class="tags">
+        <span class="tag tag-blue">Revecast Product</span>
+        <span class="tag tag-purple">Managed Package + Site Kit</span>
+        <span class="tag tag-green">Beta</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <h2>What is the PSA Portal?</h2>
+
+    <p>
+      The PSA Portal is a ready-made <strong>Experience Cloud</strong> site that puts each
+      external user's own Revecast PSA data in front of them &mdash; the projects they're on,
+      their schedule, their time entries, key documents, day-off requests and more &mdash;
+      accessed with a <strong>Customer Community Plus</strong> license instead of a full
+      Salesforce seat. Everything a user sees is scoped to <em>their</em> linked Contact,
+      so no one browses anyone else's records.
+    </p>
+
+    <p>
+      Because a live Experience Cloud site can't be delivered inside a managed package,
+      the Portal ships in two halves: an upgradeable <strong>managed package</strong>
+      (the Apex, Lightning Web Components, permission sets and the setup wizard) and a
+      per-org <strong>site deploy kit</strong> (the LWR site itself, navigation, audiences
+      and sharing). The bundled <strong>Portal Setup</strong> wizard stitches the two
+      together in a few clicks.
+    </p>
+
+    <hr class="divider">
+
+    <h2>Key Capabilities</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Self-Service Record Pages</div>
+        <p>Out-of-the-box pages for a user's projects, project members, schedules, time entries, workstreams, key documents, day-off and more &mdash; each pre-scoped to the signed-in user's own Contact.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">One-Click Provisioning</div>
+        <p>The Portal Setup wizard creates the site, deploys the site bundle, publishes it, and seeds the configurable related lists, record banners and activity timelines &mdash; turning a multi-day Experience Cloud build into a guided sequence.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Role-Based Navigation</div>
+        <p>The User Assignment tab lets an admin pick portal users and assign a role &mdash; Standard, Manager, Reviewer, or both &mdash; which in one action grants the matching permission set(s) and stamps the audience field that drives which navigation each user sees.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Configurable Components</div>
+        <p>Related lists, highlight banners and activity timelines are all driven by configuration records (from Revecast Experience Components), so what shows on each object's page is admin-tunable &mdash; no code, no Flow.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Day-Off &amp; Time Entry</div>
+        <p>External team members can submit day-off requests and log time from the portal, flowing straight into the same Revecast PSA schedule and forecast the internal team uses.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Secure by Design</div>
+        <p>Every page self-scopes to the running user's Contact; field-level security is enforced on the data the portal returns; and the portal permission sets ship pre-branded and least-privilege.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <h2>How It Works</h2>
+
+    <p><strong>For admins:</strong></p>
+    <ol>
+      <li>Install <strong>Revecast PSA (PSACore)</strong>, <strong>Revecast Experience Components</strong>, then the <strong>Revecast PSA Portal</strong> package.</li>
+      <li>Enable Digital Experiences and register a domain, then open the <strong>Portal Setup</strong> tab and run the wizard &mdash; it provisions the site, deploys the bundle, publishes it, and seeds the page configuration.</li>
+      <li>On each portal Contact, click <strong>Enable Customer User</strong> (using the <em>PSA Portal Community Plus User</em> profile) to create their login.</li>
+      <li>Open the wizard's <strong>User Assignment</strong> tab, select your new users, and assign a role &mdash; one click sets their permission set(s) and the navigation they'll see.</li>
+    </ol>
+
+    <p><strong>For users:</strong> log in to the portal and see your own projects, schedule,
+      time and documents &mdash; submit a day off or log time without ever touching the
+      internal Salesforce org.</p>
+
+    <hr class="divider">
+
+    <h2>Status</h2>
+
+    <p>
+      The PSA Portal is in <strong>beta</strong> as a second-generation managed package
+      (namespace <code>Revecast</code>), delivered alongside a per-org site deploy kit. It
+      depends on <strong>Revecast PSA (PSACore)</strong> and <strong>Revecast Experience
+      Components</strong>. Data access is self-scoped and field-level-security enforced, and
+      the release is validated by an Apex test suite plus a browser regression scenario for
+      the user-assignment flow.
+    </p>
+
+  </div>
+</div>
+
+<script src="shared/nav.js"></script>
+</body>
+</html>
