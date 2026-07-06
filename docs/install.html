@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Install Revecast Packages | Revecast</title>
+  <link rel="stylesheet" href="shared/style.css">
+  <style>
+    .pkg-tree { margin-top: 8px; }
+    .tree-node { position: relative; }
+    .tree-children {
+      margin-left: 21px;
+      padding-left: 22px;
+      border-left: 1.5px solid var(--border);
+    }
+    .tree-node.collapsed > .tree-children { display: none; }
+    /* horizontal connector from parent rail into each child card */
+    .tree-children > .tree-node > .install-card::before {
+      content: "";
+      position: absolute;
+      left: -22px;
+      top: 38px;
+      width: 20px;
+      height: 1.5px;
+      background: var(--border);
+    }
+    .install-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 22px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+    .install-card.is-soon { opacity: .6; }
+    .install-card-header { display: flex; align-items: center; gap: 11px; }
+    .collapse-toggle {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text-muted);
+      font-size: 11px;
+      cursor: pointer;
+      transition: transform .15s, color .15s, border-color .15s;
+    }
+    .collapse-toggle:hover { color: var(--text); border-color: var(--accent); }
+    .tree-node.collapsed > .install-card .collapse-toggle { transform: rotate(-90deg); }
+    .collapse-spacer { flex-shrink: 0; width: 22px; }
+    .install-icon {
+      font-size: 22px;
+      width: 42px; height: 42px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent-soft);
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .install-title { font-size: 16px; font-weight: 700; color: var(--text); flex: 1; }
+    .install-title span { display: block; font-size: 12px; font-weight: 400; color: var(--text-muted); margin-top: 2px; }
+    .ver-badge {
+      flex-shrink: 0;
+      font-size: 12px; font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--green);
+      background: rgba(34,197,94,.12);
+      border: 1px solid rgba(34,197,94,.3);
+      padding: 3px 10px; border-radius: 999px;
+    }
+    .ver-badge.ver-soon { color: var(--text-dim); background: var(--bg-surface); border-color: var(--border); }
+    .install-desc { margin: 0; font-size: 13.5px; color: var(--text-muted); padding-left: 33px; }
+    .install-flags { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 33px; }
+    .install-flag {
+      font-size: 11px; font-weight: 600;
+      padding: 3px 9px; border-radius: 4px;
+    }
+    .flag-first { background: rgba(34,197,94,.12); color: var(--green); border: 1px solid rgba(34,197,94,.25); }
+    .flag-dep { background: var(--rc-blue-soft); color: var(--rc-blue-hover); border: 1px solid var(--rc-blue-border); }
+    .install-btns { display: flex; flex-wrap: wrap; gap: 8px; padding-left: 33px; }
+    .install-btns a { font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 5px; text-decoration: none; }
+    .btn-prod { background: var(--rc-blue); color: #fff; }
+    .btn-prod:hover { background: var(--rc-blue-hover); text-decoration: none; }
+    .btn-sbx { background: var(--accent-soft); color: var(--accent-hover); border: 1px solid var(--rc-blue-border); }
+    .btn-sbx:hover { background: rgba(12,131,223,.2); text-decoration: none; }
+    .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { color: var(--text); text-decoration: none; }
+    .install-cli {
+      display: flex; align-items: center; gap: 8px;
+      margin-left: 33px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      overflow-x: auto;
+    }
+    .install-cli code { flex: 1; white-space: nowrap; background: none; padding: 0; }
+    .copy-btn {
+      flex-shrink: 0;
+      font-size: 11px; font-weight: 600;
+      background: var(--bg-card);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3px 9px; cursor: pointer;
+    }
+    .copy-btn:hover { color: var(--text); border-color: var(--accent); }
+    .install-id { font-size: 11px; color: var(--text-dim); padding-left: 33px; }
+    .install-id code { font-size: 11px; color: var(--text-muted); background: none; padding: 0; }
+    .updated-note { font-size: 12px; color: var(--text-dim); margin-top: -8px; }
+    .tree-tools { display: flex; gap: 8px; margin: 4px 0 18px; }
+    .tree-tools button {
+      font-size: 12px; font-weight: 600;
+      background: var(--bg-card); color: var(--text-muted);
+      border: 1px solid var(--border); border-radius: 5px;
+      padding: 5px 11px; cursor: pointer;
+    }
+    .tree-tools button:hover { color: var(--text); border-color: var(--accent); }
+    @media (max-width: 768px) {
+      .tree-children { margin-left: 10px; padding-left: 12px; }
+      .tree-children > .tree-node > .install-card::before { left: -12px; width: 10px; }
+      .install-desc, .install-btns, .install-cli, .install-id, .install-flags { padding-left: 0; margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <a href="index.html"><img src="shared/logo.svg" alt="Revecast" class="sidebar-logo"></a>
+    <a class="logo" href="index.html">Revecast</a>
+    <div class="badge">Documentation</div>
+  </div>
+  <div class="sidebar-nav">
+    <a href="index.html"><span class="icon">&#127968;</span> Home</a>
+    <a href="system.html"><span class="icon">&#128260;</span> The Revecast System</a>
+    <a href="install.html" class="active"><span class="icon">&#128230;</span> Install &amp; Downloads</a>
+
+    <div class="nav-section">Community</div>
+    <a href="feedback/"><span class="icon">&#128161;</span> Feature Requests</a>
+
+    <div class="nav-section">Products</div>
+    <a href="https://revecast.github.io/PSACore/"><span class="icon">&#9889;</span> Revecast PSA</a>
+    <a href="https://revecast.github.io/revecast-recruiter/"><span class="icon">&#128188;</span> Revecast Recruiter</a>
+    <a href="https://revecast.github.io/revecast-forms/"><span class="icon">&#128221;</span> Revecast Forms</a>
+    <a href="https://revecast.github.io/Revecast-Kanban/"><span class="icon">&#128203;</span> Revecast Kanban</a>
+    <a href="connect.html"><span class="icon">&#128279;</span> Revecast Connect</a>
+    <a href="https://revecast.github.io/Revecast-Reporting-Engine/"><span class="icon">&#128202;</span> Reporting Engine</a>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <button type="button" class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="topbar-title"><strong>Revecast</strong> &mdash; Install &amp; Downloads</div>
+    <div class="topbar-meta"></div>
+  </div>
+
+  <div class="content">
+    <div class="page-hero">
+      <h1>Install Revecast Packages
+        <span class="subtitle">Latest released versions of every Revecast package, shown as a dependency tree with production and sandbox install links.</span>
+      </h1>
+    </div>
+
+    <p class="updated-note">Latest promoted (GA) versions from the Revecast Dev Hub. Last updated 2026-07-06.</p>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">&#128161;</span>
+      <p>Packages are nested by dependency &mdash; install a parent before its children. Extension packages (Setup Wizard, PMT, Portal, AI) sit under <strong>PSACore</strong>. Blue tags call out additional dependencies beyond the parent.</p>
+    </div>
+
+    <div class="tree-tools">
+      <button type="button" id="expand-all">Expand all</button>
+      <button type="button" id="collapse-all">Collapse all</button>
+    </div>
+
+    <div class="pkg-tree">
+<div class="tree-node">
+      <div class="install-card is-soon">
+        <div class="install-card-header">
+          <button class="collapse-toggle" type="button" aria-label="Collapse">▾</button>
+          <div class="install-icon">🏗️</div>
+          <div class="install-title">Revecast Base
+            <span>Shared foundation for every Revecast product</span>
+          </div>
+          <span class="ver-badge ver-soon">Coming soon</span>
+        </div>
+        <p class="install-desc">Shared base objects (Skill, Project Role, Person Skill, Skills Match) used across every Revecast product. The base layer everything else builds on.</p>
+        
+      </div>
+      <div class="tree-children">
+<div class="tree-node">
+      <div class="install-card">
+        <div class="install-card-header">
+          <button class="collapse-toggle" type="button" aria-label="Collapse">▾</button>
+          <div class="install-icon">⚡</div>
+          <div class="install-title">Revecast PSA (PSACore)
+            <span>Time tracking, project management, scheduling, forecasting &amp; invoicing</span>
+          </div>
+          <span class="ver-badge">v0.19.0</span>
+        </div>
+        <p class="install-desc">The foundation for professional services automation in Salesforce. Includes the Timer for live tracking, the Schedule grid for capacity planning, and the Timesheet for review and approval.</p>
+        
+        <div class="install-btns">
+          <a class="btn-prod" href="https://login.salesforce.com/packaging/installPackage.apexp?p0=04tUI00000186xJYAQ">&#9660; Install in Production</a>
+          <a class="btn-sbx" href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04tUI00000186xJYAQ">&#9660; Install in Sandbox</a>
+          <a class="btn-ghost" href="https://revecast.github.io/PSACore/">Docs</a>
+        </div>
+        <div class="install-cli"><code>sf package install --package 04tUI00000186xJYAQ --wait 10 --target-org &lt;alias&gt;</code><button class="copy-btn" type="button" data-cli="sf package install --package 04tUI00000186xJYAQ --wait 10 --target-org &lt;alias&gt;">Copy</button></div>
+        <div class="install-id">Package Id: <code>04tUI00000186xJYAQ</code></div>
+      </div>
+      <div class="tree-children">
+<div class="tree-node">
+      <div class="install-card">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">🧰</div>
+          <div class="install-title">PSA Admin Setup Wizard
+            <span>Guided post-install configuration for a new PSA org</span>
+          </div>
+          <span class="ver-badge">v1.0.0</span>
+        </div>
+        <p class="install-desc">Walks admins through environment configuration, permission sets, project templates, and seed data so a team can start on day one.</p>
+        <div class="install-flags"><span class="install-flag flag-dep">Extends PSACore</span></div>
+        <div class="install-btns">
+          <a class="btn-prod" href="https://login.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000016xRRYAY">&#9660; Install in Production</a>
+          <a class="btn-sbx" href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000016xRRYAY">&#9660; Install in Sandbox</a>
+          <a class="btn-ghost" href="https://revecast.github.io/PSACore/psa-setup-wizard-user-guide.html">Docs</a>
+        </div>
+        <div class="install-cli"><code>sf package install --package 04tUI0000016xRRYAY --wait 10 --target-org &lt;alias&gt;</code><button class="copy-btn" type="button" data-cli="sf package install --package 04tUI0000016xRRYAY --wait 10 --target-org &lt;alias&gt;">Copy</button></div>
+        <div class="install-id">Package Id: <code>04tUI0000016xRRYAY</code></div>
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">🧩</div>
+          <div class="install-title">PSA PMT
+            <span>Connect PSA to your project management tool (Jira)</span>
+          </div>
+          <span class="ver-badge">v0.6.0</span>
+        </div>
+        <p class="install-desc">Brings Jira projects, sprints, issues, and assignees into Salesforce automatically — and flows PSA time entries back to your forecast and reporting.</p>
+        <div class="install-flags"><span class="install-flag flag-dep">Extends PSACore</span></div>
+        <div class="install-btns">
+          <a class="btn-prod" href="https://login.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000017yWjYAI">&#9660; Install in Production</a>
+          <a class="btn-sbx" href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000017yWjYAI">&#9660; Install in Sandbox</a>
+          <a class="btn-ghost" href="https://revecast.github.io/PSACore/pmt.html">Docs</a>
+        </div>
+        <div class="install-cli"><code>sf package install --package 04tUI0000017yWjYAI --wait 10 --target-org &lt;alias&gt;</code><button class="copy-btn" type="button" data-cli="sf package install --package 04tUI0000017yWjYAI --wait 10 --target-org &lt;alias&gt;">Copy</button></div>
+        <div class="install-id">Package Id: <code>04tUI0000017yWjYAI</code></div>
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card is-soon">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">🌐</div>
+          <div class="install-title">Revecast PSA Portal
+            <span>Customer Experience Cloud portal for external users</span>
+          </div>
+          <span class="ver-badge ver-soon">Coming soon</span>
+        </div>
+        <p class="install-desc">Experience Cloud portal for Revecast PSA, for external Customer Community Plus users.</p>
+        <div class="install-flags"><span class="install-flag flag-dep">Extends PSACore</span><span class="install-flag flag-dep">Also requires Revecast Experience Components</span></div>
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card is-soon">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">🧠</div>
+          <div class="install-title">Revecast AI for PSA
+            <span>AI assistant &amp; agents for Revecast PSA</span>
+          </div>
+          <span class="ver-badge ver-soon">Coming soon</span>
+        </div>
+        <p class="install-desc">AI-powered assistance layered on top of Revecast PSA.</p>
+        <div class="install-flags"><span class="install-flag flag-dep">Extends PSACore</span></div>
+      </div>
+    </div>
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card is-soon">
+        <div class="install-card-header">
+          <button class="collapse-toggle" type="button" aria-label="Collapse">▾</button>
+          <div class="install-icon">💼</div>
+          <div class="install-title">Revecast Recruiter
+            <span>Applicant tracking, job board &amp; candidate matching</span>
+          </div>
+          <span class="ver-badge ver-soon">Coming soon</span>
+        </div>
+        <p class="install-desc">The “hire” side of Revecast — the core recruiting CRM: applicant tracking, candidate matching, and re-engagement for any industry.</p>
+        <div class="install-flags"><span class="install-flag flag-dep">Also requires Revecast Forms</span></div>
+      </div>
+      <div class="tree-children">
+<div class="tree-node">
+      <div class="install-card is-soon">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">🪧</div>
+          <div class="install-title">Revecast Job Board
+            <span>Public Experience Cloud job board for candidates</span>
+          </div>
+          <span class="ver-badge ver-soon">Coming soon</span>
+        </div>
+        <p class="install-desc">Experience Cloud (LWR) site — the public-facing job board where candidates browse and apply.</p>
+        <div class="install-flags"><span class="install-flag flag-dep">Extends Revecast Recruiter</span></div>
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card is-soon">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">💬</div>
+          <div class="install-title">Maya
+            <span>AI candidate assistant (Agentforce)</span>
+          </div>
+          <span class="ver-badge ver-soon">Coming soon</span>
+        </div>
+        <p class="install-desc">Agentforce / Embedded Service bot that helps candidates find roles and answer questions on the job board.</p>
+        <div class="install-flags"><span class="install-flag flag-dep">Extends Revecast Recruiter</span></div>
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card is-soon">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">🧑‍💻</div>
+          <div class="install-title">Revecast HR Agent
+            <span>AI-powered recruiter assistant</span>
+          </div>
+          <span class="ver-badge ver-soon">Coming soon</span>
+        </div>
+        <p class="install-desc">AI assistant for recruiters — screening, matching, and workflow help inside Revecast Recruiter.</p>
+        <div class="install-flags"><span class="install-flag flag-dep">Extends Revecast Recruiter</span></div>
+      </div>
+    </div>
+      </div>
+    </div>
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">🔗</div>
+          <div class="install-title">Revecast Connect
+            <span>Integration platform for HR, finance &amp; external systems</span>
+          </div>
+          <span class="ver-badge">v0.17.0</span>
+        </div>
+        <p class="install-desc">The integration layer that keeps your Revecast system connected to the rest of your business — with AI-assisted integration building.</p>
+        
+        <div class="install-btns">
+          <a class="btn-prod" href="https://login.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000001X1xYAE">&#9660; Install in Production</a>
+          <a class="btn-sbx" href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000001X1xYAE">&#9660; Install in Sandbox</a>
+          <a class="btn-ghost" href="connect.html">Docs</a>
+        </div>
+        <div class="install-cli"><code>sf package install --package 04tUI0000001X1xYAE --wait 10 --target-org &lt;alias&gt;</code><button class="copy-btn" type="button" data-cli="sf package install --package 04tUI0000001X1xYAE --wait 10 --target-org &lt;alias&gt;">Copy</button></div>
+        <div class="install-id">Package Id: <code>04tUI0000001X1xYAE</code></div>
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">📝</div>
+          <div class="install-title">Revecast Forms
+            <span>Native, dynamic form builder for Salesforce</span>
+          </div>
+          <span class="ver-badge">v2.1.0</span>
+        </div>
+        <p class="install-desc">Create dynamic forms, capture submissions, and map responses to any object in real time — with conditional logic, multi-object mapping, and guest-user submissions.</p>
+        
+        <div class="install-btns">
+          <a class="btn-prod" href="https://login.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000018mtJYAQ">&#9660; Install in Production</a>
+          <a class="btn-sbx" href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000018mtJYAQ">&#9660; Install in Sandbox</a>
+          <a class="btn-ghost" href="https://revecast.github.io/revecast-forms/">Docs</a>
+        </div>
+        <div class="install-cli"><code>sf package install --package 04tUI0000018mtJYAQ --wait 10 --target-org &lt;alias&gt;</code><button class="copy-btn" type="button" data-cli="sf package install --package 04tUI0000018mtJYAQ --wait 10 --target-org &lt;alias&gt;">Copy</button></div>
+        <div class="install-id">Package Id: <code>04tUI0000018mtJYAQ</code></div>
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">📋</div>
+          <div class="install-title">Revecast Kanban
+            <span>Configurable Kanban boards for any Salesforce object</span>
+          </div>
+          <span class="ver-badge">v1.0.0</span>
+        </div>
+        <p class="install-desc">Turn any standard or custom object into a drag-and-drop Kanban board with a guided config wizard — no code required.</p>
+        
+        <div class="install-btns">
+          <a class="btn-prod" href="https://login.salesforce.com/packaging/installPackage.apexp?p0=04tUI000000y65lYAA">&#9660; Install in Production</a>
+          <a class="btn-sbx" href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04tUI000000y65lYAA">&#9660; Install in Sandbox</a>
+          <a class="btn-ghost" href="https://revecast.github.io/Revecast-Kanban/">Docs</a>
+        </div>
+        <div class="install-cli"><code>sf package install --package 04tUI000000y65lYAA --wait 10 --target-org &lt;alias&gt;</code><button class="copy-btn" type="button" data-cli="sf package install --package 04tUI000000y65lYAA --wait 10 --target-org &lt;alias&gt;">Copy</button></div>
+        <div class="install-id">Package Id: <code>04tUI000000y65lYAA</code></div>
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card is-soon">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">📊</div>
+          <div class="install-title">Revecast Reporting Engine
+            <span>One-click, record-context-aware reports</span>
+          </div>
+          <span class="ver-badge ver-soon">Coming soon</span>
+        </div>
+        <p class="install-desc">Drop a Lightning component on any record page for one-click access to the right reports, with record-context filters pre-applied.</p>
+        
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card is-soon">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">🧱</div>
+          <div class="install-title">Revecast Experience Components
+            <span>Reusable LWR / Experience Cloud components</span>
+          </div>
+          <span class="ver-badge ver-soon">Coming soon</span>
+        </div>
+        <p class="install-desc">A library of configurable components for Experience Cloud sites.</p>
+        
+      </div>
+    </div>
+<div class="tree-node">
+      <div class="install-card">
+        <div class="install-card-header">
+          <button class="collapse-toggle" type="button" aria-label="Collapse">▾</button>
+          <div class="install-icon">🤖</div>
+          <div class="install-title">Revecast Orchestrate
+            <span>AI-powered, multi-org Salesforce delivery agent</span>
+          </div>
+          <span class="ver-badge">v1.23.0</span>
+        </div>
+        <p class="install-desc">Persona-based session types (BUILD, DESIGN, REVIEW, DEPLOY, ASSESS, MEETING) with an AWS Fargate backend and session tracking.</p>
+        
+        <div class="install-btns">
+          <a class="btn-prod" href="https://login.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000018lpBYAQ">&#9660; Install in Production</a>
+          <a class="btn-sbx" href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000018lpBYAQ">&#9660; Install in Sandbox</a>
+          
+        </div>
+        <div class="install-cli"><code>sf package install --package 04tUI0000018lpBYAQ --wait 10 --target-org &lt;alias&gt;</code><button class="copy-btn" type="button" data-cli="sf package install --package 04tUI0000018lpBYAQ --wait 10 --target-org &lt;alias&gt;">Copy</button></div>
+        <div class="install-id">Package Id: <code>04tUI0000018lpBYAQ</code></div>
+      </div>
+      <div class="tree-children">
+<div class="tree-node">
+      <div class="install-card">
+        <div class="install-card-header">
+          <span class="collapse-spacer"></span>
+          <div class="install-icon">🔌</div>
+          <div class="install-title">Orchestrate Connector
+            <span>External Client App for target orgs</span>
+          </div>
+          <span class="ver-badge">v0.3.0</span>
+        </div>
+        <p class="install-desc">Connects a target Salesforce org to Revecast Orchestrate. Install in each org you want Orchestrate to manage.</p>
+        <div class="install-flags"><span class="install-flag flag-dep">Extends Revecast Orchestrate</span></div>
+        <div class="install-btns">
+          <a class="btn-prod" href="https://login.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000018xf3YAA">&#9660; Install in Production</a>
+          <a class="btn-sbx" href="https://test.salesforce.com/packaging/installPackage.apexp?p0=04tUI0000018xf3YAA">&#9660; Install in Sandbox</a>
+          
+        </div>
+        <div class="install-cli"><code>sf package install --package 04tUI0000018xf3YAA --wait 10 --target-org &lt;alias&gt;</code><button class="copy-btn" type="button" data-cli="sf package install --package 04tUI0000018xf3YAA --wait 10 --target-org &lt;alias&gt;">Copy</button></div>
+        <div class="install-id">Package Id: <code>04tUI0000018xf3YAA</code></div>
+      </div>
+    </div>
+      </div>
+    </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="shared/nav.js"></script>
+<script>
+  document.querySelectorAll('.collapse-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      btn.closest('.tree-node').classList.toggle('collapsed');
+    });
+  });
+  var ea = document.getElementById('expand-all');
+  var ca = document.getElementById('collapse-all');
+  if (ea) ea.addEventListener('click', function () {
+    document.querySelectorAll('.tree-node.collapsed').forEach(function (n) { n.classList.remove('collapsed'); });
+  });
+  if (ca) ca.addEventListener('click', function () {
+    document.querySelectorAll('.tree-children').forEach(function (c) { c.parentElement.classList.add('collapsed'); });
+  });
+  document.querySelectorAll('.copy-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.getAttribute('data-cli').replace('&lt;', '<').replace('&gt;', '>'));
+      var t = b.textContent; b.textContent = 'Copied'; setTimeout(function () { b.textContent = t; }, 1200);
+    });
+  });
+</script>
+</body>
+</html>
