@@ -450,6 +450,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="https://revecast.github.io/Revecast-Kanban/"><span class="icon">&#128203;</span> Revecast Kanban</a>
     <a href="connect.html"><span class="icon">&#128279;</span> Revecast Connect</a>
     <a href="https://revecast.github.io/Revecast-Reporting-Engine/"><span class="icon">&#128202;</span> Reporting Engine</a>
+    <a href="portal.html"><span class="icon">&#127760;</span> PSA Portal</a>
   </div>
 </nav>
 
