@@ -139,6 +139,13 @@ TREE = [
         "docs": "https://revecast.github.io/revecast-forms/",
     },
     {
+        "name": "Revecast PSA Spend",
+        "display": "Revecast PSA Spend",
+        "icon": "\U0001f4b3",
+        "tagline": "Employee expense reports, spending policies, approval & payment",
+        "desc": "Employees file expense reports with receipts; policies flag anything over the limit; approvers decide each expense and mark reports paid. Installs on its own. Optional AI receipt scanning needs Revecast AI for PSA and Einstein.",
+    },
+    {
         "name": "Revecast Kanban",
         "display": "Revecast Kanban",
         "icon": "\U0001f4cb",
